@@ -15,10 +15,13 @@ export default class App extends React.Component {
     });
 
   };
+
+  //Activates when button is pressed. 
   placeSubmitHandler = () => {
     if(this.state.placeName.trim() === "") {
       return;
     }
+    //Concantentates adds new element and returns new array.
     this.setState(prevState => {
         return {
             places: prevState.places.concat(prevState.placeName)
@@ -29,6 +32,7 @@ export default class App extends React.Component {
     
   }
   render() {
+    //Iterates text jsx element into array for output in view.
     const placesOutput = this.state.places.map((place,i) => (
       <Text key={i}>{place}</Text>
 
