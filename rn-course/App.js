@@ -2,54 +2,37 @@ import React from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 
 import ListItem from './src/components/ListItem/ListItem';
+import TextSubmit from './src/components/TextSubmit/TextSubmit';
 
 export default class App extends React.Component {
   state = {
-    placeName: "",
     places: []
   };
-
-  //Must be arrow function so this refers to class. 
-  placeNameChangedHandler = val => {
-    //This refers to class.
-    this.setState({
-      placeName: val
-    });
-
+  
+  //Allows state change of places from another component. 
+  changePlaces = (newPlace) => {
+    
+    this.setState(prevState => {
+      return {
+       places:prevState.places.concat(newPlace)
+      };
+     
+    })
   };
 
-  //Activates when button is pressed. 
-  placeSubmitHandler = () => {
-    if(this.state.placeName.trim() === "") {
-      return;
-    }
-    //Concantentates adds new element and returns new array.
-    this.setState(prevState => {
-        return {
-            places: prevState.places.concat(prevState.placeName)
-        };
-    })
-    
-
-    
-  }
   render() {
     //Iterates text jsx element into array for output in view.
     const placesOutput = this.state.places.map((place,i) => (
       <ListItem key={i} placeName={place} /> 
-
-     ));
+      
+    ));
     return (
       <View style={styles.container}>
-       <View style={styles.inputContainer}> 
-         <TextInput 
-            placeholder="An awesome place"
-            value={this.state.placeName} 
-            onChangeText={this.placeNameChangedHandler}
-            style={styles.placeInput}          
-          />
-          <Button title="Add" style={styles.placeButton} onPress={this.placeSubmitHandler} />
-        </View>
+        <TextSubmit
+          onPlaceSubmitHandler={this.state.places}
+          changePlaces={this.changePlaces.bind(this)}
+        
+        />
         <View style={styles.listContainer}>
           {placesOutput}
         </View>
@@ -65,19 +48,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'flex-start'
-  },
-  inputContainer:{
-    width:"100%",
-    flexDirection: "row",
-    justifyContent:"space-between",
-    alignItems:"center"
-  },
-  placeInput: {
-    width:"70%"
-  },
-  placeButton: {
-    width:"30%"
-
   },
   listContainer: {
     width:"100%"
