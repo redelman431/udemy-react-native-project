@@ -13,11 +13,17 @@ export default class App extends React.Component {
 
     this.setState(prevState => {
         return {
-            //Using math.random according to instructor gives warning. Converted to string.
+            
+            /*Image is liscesed to wikimedia creative commons and open source see
+            https://commons.wikimedia.org/wiki/File:Columbus-ohio-skyline-panorama.jpg 
+            for more details.*/
             places: prevState.places.concat({
-                                key: `${Math.random()}`, 
+                                key: `${Math.random()}`, //Using math.random according to instructor gives warning. Converted to string.
                                 name: placeName,
-                                image: placeImage
+                                image: {
+                                  uri: "https://upload.wikimedia.org/wikipedia/commons/f/fc/Columbus-ohio-skyline-panorama.jpg"
+                                  
+                                }
             })
         };
     });
