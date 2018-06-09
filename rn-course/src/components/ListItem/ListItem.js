@@ -11,7 +11,6 @@ const listItem = (props) => (
             <Text>{props.placeName}</Text>
         </View>
     </TouchableOpacity>
-
 );
 
 const styles = StyleSheet.create({
