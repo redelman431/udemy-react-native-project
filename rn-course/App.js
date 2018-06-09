@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import PlaceInput from './src/components/PlaceInput/PlaceInput';
 import PlaceList from './src/components/PlaceList/PlaceList';
+import placeImage from './src/assets/beautiful-place.jpg';
 
 export default class App extends React.Component {
   state = {
@@ -15,7 +16,8 @@ export default class App extends React.Component {
             //Using math.random according to instructor gives warning. Converted to string.
             places: prevState.places.concat({
                                 key: `${Math.random()}`, 
-                                value: placeName
+                                name: placeName,
+                                image: placeImage
             })
         };
     });
