@@ -10,7 +10,6 @@ class AuthScreen extends Component {
     render() {
         return (
             <View>
-                <Text>Another Auth Screen</Text>
                 <Text>Auth Screen</Text>
                 <Button title="Login" onPress={this.loginHandler} />
             </View> 
