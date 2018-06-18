@@ -20,6 +20,6 @@ Navigation.registerComponent("awesome-places.SideDrawer",() => SideDrawer)
 Navigation.startSingleScreenApp({
   screen:{
     screen:"awesome-places.AuthScreen",
-    title:"Login!"
+    title:"Login"
   }
 });
