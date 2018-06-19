@@ -31,13 +31,33 @@ class FindPlaceScreen extends Component {
         }
     }
 
+    placesLoadedHandler = () => {
+        //Start an animation that fades in the list. Starts at value 0. For flatlist.  
+        /*Animated.timing(this.state.removeAnim,{
+            toValue:0,
+            duration: 500,
+            useNativeDriver:true
+
+       }).start(() => {
+          this.setState({
+              placeLoaded: true
+          }); 
+       });*/
+    }
+
     placesSearchHandler = () => {
        Animated.timing(this.state.removeAnim,{
             toValue:0,
             duration: 500,
             useNativeDriver:true
 
-       }).start();
+       }).start(() => {
+          this.setState({
+              placesLoaded: true
+          }); 
+          this.placesLoadedHandler();
+       });
+       
     };
 
     itemSelectedHandler = key => {
@@ -77,9 +97,11 @@ class FindPlaceScreen extends Component {
         );
         if(this.state.placesLoaded) {
             content= (
-                        <PlaceList places={this.props.places} 
-                            onItemSelected={this.itemSelectedHandler}
-                         />
+                        <Animated.View>
+                            <PlaceList places={this.props.places} 
+                                onItemSelected={this.itemSelectedHandler}
+                            />
+                        </Animated.View>
             );
         }
         return(
