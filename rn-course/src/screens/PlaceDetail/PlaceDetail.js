@@ -62,7 +62,7 @@ class PlaceDetail extends Component {
             </Text>
           </View>
           <View>
-            <TouchableOpacity onPress={this.placeDeletedHandler}>
+            <TouchableOpacity onPress={this.placeDeletedHandler}> 
               <View style={styles.deleteButton}>
                 <Icon
                   size={30}
@@ -72,6 +72,7 @@ class PlaceDetail extends Component {
               </View>
             </TouchableOpacity>
           </View>
+
         </View>
       </View>
     );
