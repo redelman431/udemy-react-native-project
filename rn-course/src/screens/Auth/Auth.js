@@ -24,15 +24,17 @@ class AuthScreen extends Component {
 
   constructor(props) {
     super(props);
-    Dimensions.addEventListener("change", (dims) => {
-      this.setState({
-        viewMode: Dimensions.get("window").height > 500 ? "portrait" : "landscape"
-        /*respStyles: {
-          pwContainerDirection: Dimensions.get("window").height > 500 ? "column" : "row",
-          pwContainerJustifyContent: Dimensions.get("window").height > 500 ? "flex-start" : "space-between",
-          pwWrapperWidth: Dimensions.get("window").height > 500 ? "100%" : "45%"
-        }*/
-      })
+    Dimensions.addEventListener("change", this.updateStyles);
+  }
+
+  //Make sure eventListener detach if it does not exist to prevent memory leaks. 
+  componentWillUnmount() {
+    Dimensions.removeEventListener("change",this.updateStyles);
+  }
+
+  updateStyles = (dims) => {
+    this.setState({
+      viewMode: dims.window.height > 500 ? "portrait" : "landscape"
     });
   }
 
