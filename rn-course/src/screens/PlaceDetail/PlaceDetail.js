@@ -6,7 +6,7 @@ import {deletePlace} from '../../store/actions/index';
 
 class PlaceDetail extends Component {
     state = {
-        viewMode: Dimensions.get("window").height > 500 ? "portrait" : "landscape"
+        viewMode: "portrait"
     }
 
     constructor(props) {
@@ -31,25 +31,32 @@ class PlaceDetail extends Component {
 
     render() {
         return(
-            <View style={styles.container}>
-                <View>
+            <View style={[
+                            styles.container, 
+                             this.state.viewMode ==="portrait" 
+                                ? styles.portraitContainer 
+                                : styles.landScapeContainer
+            ]}>
+                <View style={styles.subContainer}>
                     <Image source={this.props.selectedPlace.image}
-                           style={this.state.viewMode ==="portrait" 
-                                ? styles.portraitPlaceImage 
-                                : styles.landscapePlaceImage
-                            }
+                           style={styles.placeImage}
                     /> 
-                    <Text style={styles.placeName}>{this.props.selectedPlace.name}</Text>
+                    
                 </View> 
-                <View>
-                    <TouchableOpacity onPress={this.placeDeletedHandler}>
-                        <View style={styles.deleteButton}>
-                             <Icon size={30} 
-                                   name={Platform.OS === 'android' ? 'md-trash':"ios-trash"} 
-                                   color="red" />
-                        </View>
-                    </TouchableOpacity>
-                </View>
+                <View styles={styles.subContainer}>
+                    <View> 
+                        <Text style={styles.placeName}>{this.props.selectedPlace.name}</Text>
+                    </View>
+                    <View>
+                        <TouchableOpacity onPress={this.placeDeletedHandler}>
+                            <View style={styles.deleteButton}>
+                                <Icon size={30} 
+                                    name={Platform.OS === 'android' ? 'md-trash':"ios-trash"} 
+                                    color="red" />
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </View> 
             </View>
         )    
     }
@@ -57,15 +64,18 @@ class PlaceDetail extends Component {
     
 const styles = StyleSheet.create({
     container:{
-        margin: 22
+        margin: 22,
+        flex: 1
     },
-    portraitPlaceImage: {
+    portraitContainer: {
+       flexDirection:"column" 
+    },
+    landScapeContainer: {
+        flexDirection:"row"
+    },
+    placeImage: {
         width:"100%",
         height:200 
-    },
-    landscapePlaceImage: {
-        width:"100%",
-        height:130
     },
     placeName: {
         fontWeight: "bold",
@@ -74,6 +84,9 @@ const styles = StyleSheet.create({
     },
     deleteButton: {
         alignItems:"center"
+    },
+    subContainer: {
+        flex:1
     }
 
 });
