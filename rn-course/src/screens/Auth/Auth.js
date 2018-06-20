@@ -24,6 +24,7 @@ class AuthScreen extends Component {
 
   state = {
     viewMode: Dimensions.get("window").height > 500 ? "portrait" : "landscape",
+    authMode: "login",
     controls:{
       email: {
         value:"",
@@ -62,6 +63,14 @@ class AuthScreen extends Component {
   //Make sure eventListener detach if it does not exist to prevent memory leaks. 
   componentWillUnmount() {
     Dimensions.removeEventListener("change",this.updateStyles);
+  }
+
+  switchAuthModeHandler = () => {
+    this.setState(prevState => {
+      return {
+        authMode: prevState.authMode === "login" ?  "signup" : "login"
+      };
+    });
   }
 
   updateStyles = (dims) => {
@@ -137,8 +146,11 @@ class AuthScreen extends Component {
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
         <View style={styles.container}>
           {headingText}
-          <ButtonWithBackground color="#29aaf4" onPress={() => alert("Hello")}>
-            Switch to Login
+          <ButtonWithBackground 
+            color="#29aaf4" 
+            onPress={this.switchAuthModeHandler}
+          >
+            Switch to {this.state.authMode === 'login' ? "Sign Up" : "Login"}
           </ButtonWithBackground>
           <View style={styles.inputContainer}>
             <DefaultInput
