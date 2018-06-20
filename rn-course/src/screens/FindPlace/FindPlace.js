@@ -13,7 +13,7 @@ class FindPlaceScreen extends Component {
     state = {
         placesLoaded:false,
         removeAnim: new Animated.Value(1), //Scale 1, opacaity 1.
-        removeFadeInAnim: new Animated.Value(0)
+        placesAnim: new Animated.Value(0)
     }
 
     constructor(props) {
@@ -34,15 +34,12 @@ class FindPlaceScreen extends Component {
 
     placesLoadedHandler = () => {
     
-        Animated.timing(this.state.removeFadeInAnim,{
+        Animated.timing(this.state.placesAnim,{
             toValue:1,
             duration: 500,
             useNativeDriver:true
 
-       }).start(() => {
-        
-        
-       });
+       }).start();
     }
 
     placesSearchHandler = () => {
@@ -99,7 +96,7 @@ class FindPlaceScreen extends Component {
             
             content= (
                         <Animated.View style={{
-                            opacity:this.state.removeFadeInAnim
+                            opacity:this.state.placesAnim
                         }}>
                         
                             <PlaceList places={this.props.places} 
