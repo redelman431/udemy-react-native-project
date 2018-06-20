@@ -12,7 +12,8 @@ class FindPlaceScreen extends Component {
 
     state = {
         placesLoaded:false,
-        removeAnim: new Animated.Value(1) //Scale 1, opacaity 1.
+        removeAnim: new Animated.Value(1), //Scale 1, opacaity 1.
+        removeFadeInAnim: new Animated.Value(0)
     }
 
     constructor(props) {
@@ -32,17 +33,16 @@ class FindPlaceScreen extends Component {
     }
 
     placesLoadedHandler = () => {
-        //Start an animation that fades in the list. Starts at value 0. For flatlist.  
-        /*Animated.timing(this.state.removeAnim,{
-            toValue:0,
+    
+        Animated.timing(this.state.removeFadeInAnim,{
+            toValue:1,
             duration: 500,
             useNativeDriver:true
 
        }).start(() => {
-          this.setState({
-              placeLoaded: true
-          }); 
-       });*/
+        
+        
+       });
     }
 
     placesSearchHandler = () => {
@@ -96,8 +96,12 @@ class FindPlaceScreen extends Component {
             </Animated.View>
         );
         if(this.state.placesLoaded) {
+            
             content= (
-                        <Animated.View>
+                        <Animated.View style={{
+                            opacity:this.state.removeFadeInAnim
+                        }}>
+                        
                             <PlaceList places={this.props.places} 
                                 onItemSelected={this.itemSelectedHandler}
                             />
