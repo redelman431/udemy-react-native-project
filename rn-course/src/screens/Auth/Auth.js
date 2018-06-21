@@ -189,7 +189,7 @@ class AuthScreen extends Component {
               touched={this.state.controls.email.touched}
               autoCapitalize="none"
               autoCorrect={false}
-              keyboard="email-address"
+              keyboardType="email-address"
 
             />
             <View style={this.state.viewMode === "portrait" || 
