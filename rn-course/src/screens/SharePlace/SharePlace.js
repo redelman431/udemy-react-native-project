@@ -2,11 +2,13 @@ import React, {Component} from 'react';
 import {View, Text, TextInput, Button, StyleSheet, ScrollView, Image} from 'react-native';
 import {connect } from 'react-redux';
 import {addPlace} from '../../store/actions/index';
+import validate from '../../utility/validation';
 import PlaceInput from '../../components/PlaceInput/PlaceInput';
 import MainText from '../../components/UI/MainText/MainText';
 import HeadingText from '../../components/UI/HeadingText/HeadingText'
 import PickImage from '../../components/PickImage/PickImage';
 import PickLocation from '../../components/PickLocation/PickLocation'
+import ButtonWithBackground from "../../components/UI/ButtonWithBackground/ButtonWithBackground";
 
 class SharePlaceScreen extends Component {
     static navigatorStyle = {
@@ -14,7 +16,16 @@ class SharePlaceScreen extends Component {
     }
 
     state = {
-        placeName:""
+        placeName:"",
+        controls:{
+            placeInput: {
+              valid:false,
+              value:"",
+              validationRules:{
+                isNotEmpty: true
+              },
+            }
+        }
     };
     constructor(props) {
         super(props);
@@ -32,18 +43,32 @@ class SharePlaceScreen extends Component {
         }
     }
 
-    placeNameChangedHandler = val => {
+    placeNameChangedHandler = (key,value) => {
         this.setState({
-            placeName: val
+            placeName: value
 
+        });
+        let connectedValue = {};
+        this.setState(prevState => {
+            return {
+                 controls: {
+                    ...prevState.controls,
+                    [key]:{
+                        ...prevState.controls[key],
+                        value: value, 
+                        valid:validate(value,prevState.controls[key].validationRules,connectedValue)
+                        
+                    }
+                }
+            }  
         });
     }
 
     placeAddedHandler = () =>
     {
-        if(this.state.placeName.trim() !=="") {
+        //if(this.state.placeName.trim() !=="") {
             this.props.onAddPlace(this.state.placeName);
-        }
+        //}
     };
     render() {
         return(
@@ -55,9 +80,16 @@ class SharePlaceScreen extends Component {
                     <PickImage />
                     <PickLocation />
                     <PlaceInput placeName={this.state.placeName} 
-                                onChangeText={this.placeNameChangedHandler} />
+                                onChangeText={(val) => this.placeNameChangedHandler('placeInput',val)} />
                     <View style={styles.button}>
-                        <Button title="Share the Place!" onPress={this.placeAddedHandler}/>
+                        {/*<Button title="Share the Place!" onPress={this.placeAddedHandler}/>*/}
+                        <ButtonWithBackground 
+                            color="#29aaf4" 
+                            onPress={this.loginHandler}
+                            disabled = {!this.state.controls.placeInput.valid }
+                        >
+                            Share the Place!
+                        </ButtonWithBackground>
                     </View>
                 </View>
             </ScrollView>
