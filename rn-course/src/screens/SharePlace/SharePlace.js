@@ -16,13 +16,13 @@ class SharePlaceScreen extends Component {
     }
 
     state = {
-        placeName:"",
         controls:{
-            placeInput: {
+            placeName: {
               valid:false,
               value:"",
+              touched: false,
               validationRules:{
-                isNotEmpty: true
+                notEmpty: true
               },
             }
         }
@@ -43,20 +43,16 @@ class SharePlaceScreen extends Component {
         }
     }
 
-    placeNameChangedHandler = (key,value) => {
-        this.setState({
-            placeName: value
-
-        });
-        let connectedValue = {};
+    placeNameChangedHandler = val => {
         this.setState(prevState => {
             return {
                  controls: {
                     ...prevState.controls,
-                    [key]:{
-                        ...prevState.controls[key],
-                        value: value, 
-                        valid:validate(value,prevState.controls[key].validationRules,connectedValue)
+                    placeName:{
+                        ...prevState.controls.placeName,
+                        value: val,
+                        valid:validate(val,prevState.controls.placeName.validationRules),
+                        touched: true
                         
                     }
                 }
@@ -66,9 +62,9 @@ class SharePlaceScreen extends Component {
 
     placeAddedHandler = () =>
     {
-        //if(this.state.placeName.trim() !=="") {
-            this.props.onAddPlace(this.state.placeName);
-        //}
+        if(this.state.controls.placeName.value.trim() !=="") {
+            this.props.onAddPlace(this.state.controls.placeName.value);
+        }
     };
     render() {
         return(
@@ -79,17 +75,14 @@ class SharePlaceScreen extends Component {
                     </MainText>
                     <PickImage />
                     <PickLocation />
-                    <PlaceInput placeName={this.state.placeName} 
-                                onChangeText={(val) => this.placeNameChangedHandler('placeInput',val)} />
+                    <PlaceInput placeData={this.state.controls.placeName} 
+                                onChangeText={this.placeNameChangedHandler} />
                     <View style={styles.button}>
-                        {/*<Button title="Share the Place!" onPress={this.placeAddedHandler}/>*/}
-                        <ButtonWithBackground 
-                            color="#29aaf4" 
-                            onPress={this.loginHandler}
-                            disabled = {!this.state.controls.placeInput.valid }
-                        >
-                            Share the Place!
-                        </ButtonWithBackground>
+                        <Button title="Share the Place!" 
+                                onPress={this.placeAddedHandler}
+                                disabled={!this.state.controls.placeName.valid}
+                        
+                        />
                     </View>
                 </View>
             </ScrollView>
