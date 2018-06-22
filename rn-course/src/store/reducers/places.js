@@ -19,7 +19,8 @@ const reducer = (state = initialState, action) => {
                     image: {
                         uri: "https://upload.wikimedia.org/wikipedia/commons/f/fc/Columbus-ohio-skyline-panorama.jpg"
                   
-                    }
+                    },
+                    location: action.location
                 })
 
             };
