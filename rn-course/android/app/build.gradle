@@ -157,6 +157,10 @@ dependencies {
     implementation 'com.google.android.gms:play-services-base:10.2.4'
     implementation 'com.google.android.gms:play-services-maps:10.2.4'
 
+
+    //React Native Image Picker. 
+     compile project(':react-native-image-picker')
+
 }
 
 // Run this once to be able to run the application with BUCK
