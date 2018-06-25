@@ -17,7 +17,7 @@ const reducer = (state = initialState, action) => {
                     key: `${Math.random()}`, //Using math.random according to instructor gives warning. Converted to string.
                     name: action.placeName,
                     image: {
-                        uri: "https://upload.wikimedia.org/wikipedia/commons/f/fc/Columbus-ohio-skyline-panorama.jpg"
+                        uri: action.image.uri
                   
                     },
                     location: action.location

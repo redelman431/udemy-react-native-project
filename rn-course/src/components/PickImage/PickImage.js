@@ -17,10 +17,12 @@ class PickImage extends Component {
                 //Successful
                 this.setState({
                     pickedImage: {uri: res.uri}
-                })
+                });
+                this.props.onImagePicked({uri:res.uri});
             }
 
         });
+        
     }
 
     render() {
