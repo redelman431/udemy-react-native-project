@@ -64,9 +64,9 @@ class SharePlaceScreen extends Component {
                         
                     }
                 }
-            }  
+            };  
         });
-    }
+    };
 
     locationPickedHandler = location => {
         this.setState(prevState => {
@@ -78,9 +78,9 @@ class SharePlaceScreen extends Component {
                         valid: true
                     }
                 }
-            }
+            };
         });
-    }
+    };
 
     imagePickedHandler = image => {
         this.setState(prevState => {
