@@ -59,3 +59,6 @@ buck-out/
 
 #Android API key
 **/*/res/values/secrets.xml
+
+#Ios API key
+**/*/ios/secrets.plist

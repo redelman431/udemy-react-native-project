@@ -19,7 +19,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  [GMSServices provideAPIKey:@"AIzaSyDOh83nuSeCXMW5qWPXidOt0ppbwCpCM5M"];
+  NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"secrets" ofType:@"plist"];
+  NSDictionary *configuration = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
+  
+  NSString *clientId = configuration[@"api_key"];
+  
+  [GMSServices provideAPIKey:clientId];
   NSURL *jsCodeLocation;
 #ifdef DEBUG
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
