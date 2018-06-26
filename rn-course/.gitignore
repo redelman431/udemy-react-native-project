@@ -62,3 +62,6 @@ buck-out/
 
 #Ios API key
 **/ios/secrets.plist
+
+#firebase id
+**/secrets.js
