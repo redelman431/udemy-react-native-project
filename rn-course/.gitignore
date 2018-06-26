@@ -61,4 +61,4 @@ buck-out/
 **/*/res/values/secrets.xml
 
 #Ios API key
-**/*/ios/secrets.plist
+**/ios/secrets.plist
