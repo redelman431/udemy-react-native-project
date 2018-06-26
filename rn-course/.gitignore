@@ -56,3 +56,6 @@ yarn-error.log*
 buck-out/
 \.buckd/
 *.keystore
+
+#Android API key
+**/*/res/values/secrets.xml
