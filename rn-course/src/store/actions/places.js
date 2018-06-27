@@ -1,4 +1,4 @@
-import {  SET_PLACES } from './actionTypes';
+import {  SET_PLACES, REMOVE_PLACE } from './actionTypes';
 import Secrets from '../../../secrets';
 import {uiStartLoading,uiStopLoading} from './index';
 
@@ -80,12 +80,9 @@ export const getPlaces = () => {
 }; 
 
 export const deletePlace = (key) => {
-    /*return {
-        type: DELETE_PLACE,
-        placeKey: key
-
-    };*/
+   
     return dispatch => {
+        dispatch(removePlace(key));
         fetch("https://"+Secrets.FIREBASE_ID+".firebaseio.com/places/"+key+".json", {
             method:"DELETE"
         }).catch(err => {
@@ -94,13 +91,18 @@ export const deletePlace = (key) => {
         })
         .then(res => res.json() )
         .then(parsedRes => {
-             console.log(parsedRes);
+             console.log("Done!");
              
 
         });
-        const places = {key: key};
-        dispatch(setPlaces(places));
 
 
     }
 };
+
+export const removePlace = key => {
+    return {
+        type: REMOVE_PLACE,
+        key: key
+    };
+}
