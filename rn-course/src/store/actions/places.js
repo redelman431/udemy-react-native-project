@@ -80,8 +80,27 @@ export const getPlaces = () => {
 }; 
 
 export const deletePlace = (key) => {
-    return {
+    /*return {
         type: DELETE_PLACE,
         placeKey: key
-    };
+
+    };*/
+    return dispatch => {
+        fetch("https://"+Secrets.FIREBASE_ID+".firebaseio.com/places/"+key+".json", {
+            method:"DELETE"
+        }).catch(err => {
+            alert("Something went wrong, sorry:/");
+            console.log(err);
+        })
+        .then(res => res.json() )
+        .then(parsedRes => {
+             console.log(parsedRes);
+             
+
+        });
+        const places = {key: key};
+        dispatch(setPlaces(places));
+
+
+    }
 };
