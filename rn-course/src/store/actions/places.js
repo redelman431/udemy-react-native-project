@@ -1,4 +1,4 @@
-import { ADD_PLACE, DELETE_PLACE } from './actionTypes';
+import {  SET_PLACES } from './actionTypes';
 import Secrets from '../../../secrets';
 import {uiStartLoading,uiStopLoading} from './index';
 
@@ -39,13 +39,45 @@ export const addPlace = (placeName, location, image) => {
         .then(parsedRes => {
             console.log(parsedRes);
             dispatch(uiStopLoading());
+            
         });
-        
-        
+         
      
     };
    
 };
+
+export const setPlaces = places => {
+    return {
+        type: SET_PLACES,
+        places: places
+    };
+}
+
+export const getPlaces = () => {
+    return dispatch => {
+        fetch("https://"+Secrets.FIREBASE_ID+".firebaseio.com/places.json")
+        .catch(err => {
+            alert("Something went wrong, sorry:/");
+            console.log(err);
+        })
+        .then(res => res.json() )
+        .then(parsedRes => {
+            const places = [];
+            for (let key in parsedRes) {
+                places.push({
+                    ...parsedRes[key],
+                    image: {
+                        uri:parsedRes[key].image
+                    },
+                    key: key
+                });
+            }
+            dispatch(setPlaces(places));
+        });
+
+    }
+}; 
 
 export const deletePlace = (key) => {
     return {
