@@ -65,3 +65,6 @@ buck-out/
 
 #firebase id
 **/secrets.js
+
+#firebase keystore
+**/functions/awesome-places.json
