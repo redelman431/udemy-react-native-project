@@ -3,20 +3,15 @@ import {uiStartLoading,uiStopLoading} from './index'
 import startMainTabs from "../../screens/MainTabs/startMainTabs";
 import Secrets from '../../../secrets';
 
-export const tryAuth = (authData) => {
-    /*return {
-        type: TRY_AUTH,
-        authData: authData
-    }*/
-    return dispatch => {
-        dispatch(authSignup(authData));
-    };
-}
-
-export const authSignup = (authData) => {
+export const tryAuth = (authData,authMode) => {
+   
     return dispatch => {
         dispatch(uiStartLoading());
-        fetch("https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key="+Secrets.FIREBASE_API_KEY, {
+        let url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key="+Secrets.FIREBASE_API_KEY;
+        if(authMode === "signup") {
+            url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key="+Secrets.FIREBASE_API_KEY;
+        }
+        fetch(url, {
             method: "POST",
             body:JSON.stringify({
                 email: authData.email,
@@ -34,6 +29,7 @@ export const authSignup = (authData) => {
         })
         .then(res => res.json())
         .then(parsedRes => {
+
             dispatch(uiStopLoading())
             if(parsedRes.error) {
                 alert("Authentication failed, please try again!")
@@ -43,5 +39,9 @@ export const authSignup = (authData) => {
             
            
         });
-    }
+        
+    };
 }
+
+
+
